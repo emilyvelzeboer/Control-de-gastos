@@ -71,7 +71,6 @@ displayHistoricaltransactions()
 
 //when the button "Anadir transaccion" is clicked: history of transactions updates as well as ingresos, gastos and ahorro
 function addTransaction () {
-    debugger;
     addLineHistorical ()
     updateIngresosYGastosYAhorro()
     clearInputs()
