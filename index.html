@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Control de gastos</title>
+    <link rel="stylesheet" href="styles/reset.css">
+    <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+    <header>
+        <h1 class="title">Control de gastos</h1>
+    </header>
+    <main>
+        <div>
+            <div class="ahorro">
+                <p id = 'titolo'>TU AHORRO</p>
+                <p id="ahorro">0€</p>
+            </div>
+
+            <div class = 'ingresos_gastos'>
+                <div>
+                <p id = 'titolo'>INGRESOS</p>
+                <p id = 'ingreso'>0€</p>
+                </div>
+                <div>
+                <p id = 'titolo'>GASTOS</p>
+                <p id = 'gasto'>0€</p>
+                </div>
+            </div>
+
+            <div class="historial">
+                <h2>Historial</h2>
+                <hr>
+            </div>
+
+            <div class="form">
+                <h2>Añadir nueva transacción</h2>
+                <hr>
+                <div class="form1">
+                    <p>Concepto</p>
+                    <input required id = "inputConcepto" type="text" placeholder="Añade concepto..." maxlength="20">
+                </div>
+                <div class="form2">
+                    <p>Cantidad</p>
+                    <p>(negativo - gasto, positivo - ingreso)</p>
+                    <div class="soldi">
+                        <input required id = "inputCantidad" type="number" placeholder="Introduce cantidad..." >
+                        <img id = "immaginedelleuro" src="https://cdn-icons-png.flaticon.com/512/25/25403.png" alt="euro" >
+                    </div>
+                </div>
+            <button id="buttonElement">Añadir transacción</button>
+            </div>
+        </div>
+    </main>
+    <script src="./index.js"></script>
+</body>
+</html>
