@@ -1,4 +1,4 @@
-#Instrucciones de la practica
+# Instrucciones de la practica
 ## Control de gastos
 Necesitamos desarrollar una web que nos ayude a gestionar nuestros ingresos y gastos, con el objetivo de conocer el dinero que tenenos ahorrado.
 
@@ -12,7 +12,7 @@ Necesitamos desarrollar una web que nos ayude a gestionar nuestros ingresos y ga
 Si cerramos la web y volvemos a entrar, tenemos que recuperar todos los gastos e ingresos que habíamos introducido, así como el ahorro total.
 
 
-#Ejecución
+# Ejecución
 Este sitio está live --> https://emilyvelzeboer.github.io/control-de-gastos/
 
 <img width="351" alt="image" src="https://user-images.githubusercontent.com/112942984/206561033-c21dabbc-5d77-48f2-91e2-e76be030e54c.png">
