@@ -15,6 +15,6 @@ Si cerramos la web y volvemos a entrar, tenemos que recuperar todos los gastos e
 # Ejecución
 Este sitio está live --> https://emilyvelzeboer.github.io/control-de-gastos/
 
-<img width="351" alt="image" src="https://user-images.githubusercontent.com/112942984/206561033-c21dabbc-5d77-48f2-91e2-e76be030e54c.png">
+![emilyvelzeboer github io_control-de-gastos_(iPhone SE) (1)](https://user-images.githubusercontent.com/112942984/206562523-696491ff-ff68-4d64-b772-ab53834807ab.png)
 
 ![emilyvelzeboer github io_control-de-gastos_(iPhone SE)](https://user-images.githubusercontent.com/112942984/206562151-44b0e3f8-6df7-4811-9ea6-86d8999306c1.png)
