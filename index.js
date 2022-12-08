@@ -39,31 +39,32 @@ displayData()
 function displayHistoricaltransactions() {
     items_from_storage = JSON.parse(localStorage.getItem("transactionsList"))
 
-    if (items_from_storage.length > 0) {
-    for (let index = 0; index < items_from_storage.length; index++) {
-
-        let getConcepto = items_from_storage[index].concepto
-        let getCantidad = items_from_storage[index].cantidad
-        let getValueID = items_from_storage[index].id
-
-        const newDivElement = document.createElement("div")
-        newDivElement.setAttribute("class", `historicalBlock${getValueID}`)
-        newDivElement.setAttribute("id", "historicalBlock")
-        const newHistoricalBlock = historialElement.appendChild(newDivElement)
-        newHistoricalBlock.innerHTML = `<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Red_X.svg/1024px-Red_X.svg.png" alt="x" onclick="deleteLineOfHistory(${getValueID})" id="lineOfHistory${getValueID}">
-        <div>
-            <p id = "conceptoEnElHistorial${getValueID}"> ${getConcepto} </p>
-            <p id = "cantidadEnElHistorial${getValueID}"> ${getCantidad}€ </p>
-        </div>`
-
-        itemsList.push(items_from_storage[index])
-
-    }}else {
+    if (items_from_storage) {
+        if (items_from_storage.length > 0){
+            for (let index = 0; index < items_from_storage.length; index++) {
+            
+                let getConcepto = items_from_storage[index].concepto
+                let getCantidad = items_from_storage[index].cantidad
+                let getValueID = items_from_storage[index].id
+            
+                const newDivElement = document.createElement("div")
+                newDivElement.setAttribute("class", `historicalBlock${getValueID}`)
+                newDivElement.setAttribute("id", "historicalBlock")
+                const newHistoricalBlock = historialElement.appendChild(newDivElement)
+                newHistoricalBlock.innerHTML = `<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Red_X.svg/1024px-Red_X.svg.png" alt="x" onclick="deleteLineOfHistory(${getValueID})" id="lineOfHistory${getValueID}">
+                <div>
+                    <p id = "conceptoEnElHistorial${getValueID}"> ${getConcepto} </p>
+                    <p id = "cantidadEnElHistorial${getValueID}"> ${getCantidad}€ </p>
+                </div>`
+            
+                itemsList.push(items_from_storage[index])
+            }
+        }else {
         //reset evento
         evento = 0
         localStorage.setItem("evento", evento)
     }
-}
+}}
 
 
 displayHistoricaltransactions()
@@ -71,6 +72,7 @@ displayHistoricaltransactions()
 
 //when the button "Anadir transaccion" is clicked: history of transactions updates as well as ingresos, gastos and ahorro
 function addTransaction () {
+
     addLineHistorical ()
     updateIngresosYGastosYAhorro()
     clearInputs()
