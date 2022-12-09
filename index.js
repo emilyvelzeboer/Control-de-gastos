@@ -3,7 +3,7 @@ const inputConcepto = document.querySelector('#inputConcepto')
 const inputCantidad = document.querySelector('#inputCantidad')
 const buttonElement = document.querySelector('#buttonElement')
 const historialElement = document.querySelector(".historial")
-
+const resetButton = document.querySelector('#resetButton')
 
 //itemsList stores the list of transactions 
 let itemsList = []
@@ -40,31 +40,31 @@ function displayHistoricaltransactions() {
     items_from_storage = JSON.parse(localStorage.getItem("transactionsList"))
 
     if (items_from_storage) {
-        if (items_from_storage.length > 0){
-            for (let index = 0; index < items_from_storage.length; index++) {
-            
-                let getConcepto = items_from_storage[index].concepto
-                let getCantidad = items_from_storage[index].cantidad
-                let getValueID = items_from_storage[index].id
-            
-                const newDivElement = document.createElement("div")
-                newDivElement.setAttribute("class", `historicalBlock${getValueID}`)
-                newDivElement.setAttribute("id", "historicalBlock")
-                const newHistoricalBlock = historialElement.appendChild(newDivElement)
-                newHistoricalBlock.innerHTML = `<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Red_X.svg/1024px-Red_X.svg.png" alt="x" onclick="deleteLineOfHistory(${getValueID})" id="lineOfHistory${getValueID}">
-                <div>
-                    <p id = "conceptoEnElHistorial${getValueID}"> ${getConcepto} </p>
-                    <p id = "cantidadEnElHistorial${getValueID}"> ${getCantidad}€ </p>
-                </div>`
-            
-                itemsList.push(items_from_storage[index])
-            }
-        }else {
-        //reset evento
-        evento = 0
-        localStorage.setItem("evento", evento)
+        for (let index = 0; index < items_from_storage.length; index++) {
+        
+            let getConcepto = items_from_storage[index].concepto
+            let getCantidad = items_from_storage[index].cantidad
+            let getValueID = items_from_storage[index].id
+        
+            addLineOfTransaction(getValueID, getCantidad, getConcepto)
+        
+            itemsList.push(items_from_storage[index])
+        }
     }
-}}
+}
+
+function addLineOfTransaction(id, quantity, concept) {
+    const newDivElement = document.createElement("div")
+    newDivElement.setAttribute("class", `historicalBlock${id}`)
+    newDivElement.setAttribute("id", "historicalBlock")
+    const newHistoricalBlock = historialElement.appendChild(newDivElement)
+    newHistoricalBlock.innerHTML = `<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Red_X.svg/1024px-Red_X.svg.png" alt="x" onclick="deleteLineOfHistory(${id})" id="lineOfHistory${id}">
+    <div>
+        <p id = "conceptoEnElHistorial${id}"> ${concept} </p>
+        <p id = "cantidadEnElHistorial${id}"> ${quantity}€ </p>
+    </div>`
+
+}
 
 
 displayHistoricaltransactions()
@@ -72,10 +72,13 @@ displayHistoricaltransactions()
 
 //when the button "Anadir transaccion" is clicked: history of transactions updates as well as ingresos, gastos and ahorro
 function addTransaction () {
+    
+    const inputCantidad = document.querySelector('#inputCantidad')
+    if (inputCantidad.value != ''){
 
-    addLineHistorical ()
+    addLineofTransactionFromInput ()
     updateIngresosYGastosYAhorro()
-    clearInputs()
+    clearInputs() }
 
 }
 
@@ -83,38 +86,25 @@ buttonElement.addEventListener("click", addTransaction)
 
     
 //add a line with the transaction details in the Historial section with input values
-function addLineHistorical () {
+function addLineofTransactionFromInput () {
     const inputConcepto = document.querySelector('#inputConcepto')
     const inputCantidad = document.querySelector('#inputCantidad')
 
-    //assign a standard value to empty fields in input
-    if (inputCantidad.value == '') {
-        inputCantidad.value = 0
-    }
-    
+    //assign a standard value to empty fields in input  
     if (inputConcepto.value == '') {
         inputConcepto.value = 'transacción'
-    }
+    } 
 
     //add transaction in the history
-    const newDivElement = document.createElement("div")
-    newDivElement.setAttribute("class", `historicalBlock${evento}`)
-    newDivElement.setAttribute("id", "historicalBlock")
-    const newHistoricalBlock = historialElement.appendChild(newDivElement)
-
-    newHistoricalBlock.innerHTML = `<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Red_X.svg/1024px-Red_X.svg.png" alt="x" onclick="deleteLineOfHistory(${evento})" id="lineOfHistory${evento}"> 
-    <div>
-        <p id = "conceptoEnElHistorial${evento}"> ${inputConcepto.value} </p>
-        <p id = "cantidadEnElHistorial${evento}"> ${inputCantidad.value}€ </p>
-    </div>`
+    addLineOfTransaction(evento, inputCantidad.value, inputConcepto.value)    
 
     //save in local storage
     saveInput(evento)
 
     evento++
     saveEvento()
+} 
 
-}
 
 //clear the text in the input boxes 
 function clearInputs() {
@@ -128,19 +118,20 @@ function updateIngresosYGastosYAhorro() {
     const gastosElement = document.querySelector("#gasto")
     const ahorroElement = document.querySelector("#ahorro")
 
-
     if (parseFloat(inputCantidad.value)>=0){
         let amount_ingreso = parseFloat(inputCantidad.value) + parseFloat(IngresosElement.innerText)
+        amount_ingreso = amount_ingreso.toFixed(2)
         IngresosElement.innerText = amount_ingreso + '€'
-
-        ahorroElement.innerText = parseFloat(ahorroElement.innerText) + parseFloat(inputCantidad.value) + '€'
 
     } else if (parseFloat(inputCantidad.value)<0){
         let amount_gasto = parseFloat(inputCantidad.value) + parseFloat(gastosElement.innerText)
+        amount_gasto = amount_gasto.toFixed(2)
         gastosElement.innerText = amount_gasto + '€'
-
-        ahorroElement.innerText = parseFloat(ahorroElement.innerText) + parseFloat(inputCantidad.value) + '€'
     }
+
+    let amountAhorro = parseFloat(ahorroElement.innerText) + parseFloat(inputCantidad.value)
+    amountAhorro = amountAhorro.toFixed(2)
+    ahorroElement.innerText = amountAhorro + '€'
 
     saveData()
 }
@@ -158,26 +149,27 @@ function deleteLineOfHistory (evento) {
 function updateDataAfterDelete(evento) {
     const newElement = document.querySelector(`#cantidadEnElHistorial${evento}`)
     const ahorroElement = document.querySelector("#ahorro")
-
     if (parseFloat(newElement.innerText) >= 0) {
         const IngresosElement = document.querySelector("#ingreso")
         let amount_ingreso =  parseFloat(IngresosElement.innerText) - parseFloat(newElement.innerText)
+        amount_ingreso = amount_ingreso.toFixed(2)
         IngresosElement.innerText = amount_ingreso + '€'
-
-        ahorroElement.innerText = parseFloat(ahorroElement.innerText) - parseFloat(newElement.innerText) + '€'
 
     } else if (parseFloat(newElement.innerText) < 0) {
         const gastosElement = document.querySelector("#gasto")
         let amount_gasto = parseFloat(gastosElement.innerText) - parseFloat(newElement.innerText)
+        amount_gasto = amount_gasto.toFixed(2)
         gastosElement.innerText = amount_gasto + '€'
-
-        ahorroElement.innerText = parseFloat(ahorroElement.innerText) - parseFloat(newElement.innerText) + '€'
-
     }
+
+    ahorro_amount = parseFloat(ahorroElement.innerText) - parseFloat(newElement.innerText)
+    ahorro_amount = ahorro_amount.toFixed(2)
+    ahorroElement.innerText = ahorro_amount + '€'
+
 
     saveData()
 
-    //updateoggetto
+    //updateobject
     items_from_storage = JSON.parse(localStorage.getItem("transactionsList"))
     const getIndex = itemsList.map(object => object.id).indexOf(evento);
     itemsList.splice(getIndex, 1);
@@ -190,7 +182,6 @@ function saveInput(evento){
 
     const inputConcepto = document.querySelector('#inputConcepto')
     const inputCantidad = document.querySelector('#inputCantidad')
-
     let transaction = {
         concepto: inputConcepto.value,
         cantidad: parseFloat(inputCantidad.value),
@@ -215,7 +206,33 @@ function saveData() {
 
 //save in LocalStorage the evento value
 function saveEvento () {
-    localStorage.setItem("evento", evento)
+    localStorage.setItem("evento", evento);
 }
+
+function resetAll() {
+    //clear storage
+    localStorage.clear();
+
+    //clear inputs
+    clearInputs();
+
+    //clear data 
+    historialElement.innerHTML = "<h2>Historial</h2><hr>"
+
+    const IngresosElement = document.querySelector("#ingreso")
+    const gastosElement = document.querySelector("#gasto")
+    const ahorroElement = document.querySelector("#ahorro")
+    IngresosElement.innerText = "0.00€"
+    gastosElement.innerText = "0.00€"
+    ahorroElement.innerText = "0.00€"
+
+    //reset evento
+    evento = 0
+    localStorage.setItem("evento", evento)
+    
+}
+
+resetButton.addEventListener("click", resetAll)
+
 
 
