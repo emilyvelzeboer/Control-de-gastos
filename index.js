@@ -88,7 +88,8 @@ buttonElement.addEventListener("click", addTransaction)
 //add a line with the transaction details in the Historial section with input values
 function addLineofTransactionFromInput () {
     const inputConcepto = document.querySelector('#inputConcepto')
-    const inputCantidad = document.querySelector('#inputCantidad')
+    let inputCantidad = parseFloat(document.querySelector('#inputCantidad').value).toFixed(2)
+    inputCantidad = parseFloat(inputCantidad).toFixed(2)
 
     //assign a standard value to empty fields in input  
     if (inputConcepto.value == '') {
@@ -96,7 +97,7 @@ function addLineofTransactionFromInput () {
     } 
 
     //add transaction in the history
-    addLineOfTransaction(evento, inputCantidad.value, inputConcepto.value)    
+    addLineOfTransaction(evento, inputCantidad, inputConcepto.value)    
 
     //save in local storage
     saveInput(evento)
