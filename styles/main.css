@@ -8,10 +8,11 @@
 body {
     display: grid;
     grid-template-columns:1fr;
-    grid-template-rows: 20vh 1fr ;
+    grid-template-rows: 20vh 1fr 1vh;
     grid-template-areas: 
     "header"
-    "main";
+    "main"
+    "footer";
 }
 
 header {
@@ -157,4 +158,24 @@ img {
 
 .historial div p {
     margin: 0% 2% 0% 2%
+}
+
+footer {
+    grid-area: footer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 25px;
+
+}
+
+footer p {
+    cursor: pointer;
+    font-size: small;
+    padding-bottom: 10px ;
+}
+
+footer p:hover {
+    text-decoration: underline;
 }
