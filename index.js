@@ -100,7 +100,7 @@ function addLineofTransactionFromInput () {
     addLineOfTransaction(evento, inputCantidad, inputConcepto.value)    
 
     //save in local storage
-    saveInput(evento)
+    saveInput(evento, inputCantidad, inputConcepto.value)
 
     evento++
     saveEvento()
@@ -179,13 +179,11 @@ function updateDataAfterDelete(evento) {
 }
 
 //save the text in input in LocalStorage 
-function saveInput(evento){
+function saveInput(evento, quantity, concept){
 
-    const inputConcepto = document.querySelector('#inputConcepto')
-    const inputCantidad = document.querySelector('#inputCantidad')
     let transaction = {
-        concepto: inputConcepto.value,
-        cantidad: parseFloat(inputCantidad.value),
+        concepto: concept,
+        cantidad: quantity,
         id: evento,
     }
     itemsList.push(transaction)
